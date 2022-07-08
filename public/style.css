@@ -1,7 +1,8 @@
 body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: #293264;
-    
+    display: flex;
+    justify-content: center;
  }
  
  .start-screen {
@@ -22,7 +23,8 @@ body {
      align-items: center;
      justify-content: center;
      height: 550px;
-     width: 550px;    
+     width: 550px; 
+        
  } 
 
  .main-container2 {

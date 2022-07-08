@@ -1,70 +1,113 @@
-# Getting Started with Create React App
+# Scrimba - Quizzical trivia game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a solution to the [Quizzical final project of Scrimba's Learn React for free course](https://scrimba.com/learn/learnreact/react-section-4-solo-project-co24f49bea8aace7c174082c8).
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Continued development](#continued-development)
+- [Author](#author)
+- [Acknowledgments](#acknowledgments)
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Overview
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### The challenge
 
-### `npm test`
+Users should be able to:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Complete a trivia game that returns their score out of 5. 
+- Players can view the state of their selections, and can see what answers they got right and wrong when check answers is selected. 
 
-### `npm run build`
+### Screenshot
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![](./quizzical-screenshot.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Links
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Solution URL: [Add solution URL here](https://your-solution-url.com)
+- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
 
-### `npm run eject`
+## My process
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Built with
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- HTML5
+- CSS
+- Flexbox
+- [React](https://reactjs.org/) - JS library
+- [uuidv4](https://www.npmjs.com/package/uuidv4) - Node package
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### What I learned
 
-## Learn More
+I think one of the major hurdles in doing this project was understanding how to fetch the data and map it out. As the data is fetched asynchronosly the temptation was to set the fetched data to state and then manipulate it.
+This would lead to errors as my transformations were resulting in undefined as the fetched data was not in state before I attempted to transform it. Therefore I fetched and mapped my data using:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```js
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+React.useEffect(() => {
+        console.log("logged")
+        fetch("https://opentdb.com/api.php?amount=5&type=multiple")
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data)
+                var remapped_data = data.results.map( (result) => {
+                   var answers = result.incorrect_answers;
+                   answers.push( result.correct_answer );
+                   let shuffledAnswers = shuffle(answers)
+                   let decodedAnswers = shuffledAnswers.map((x) => {
+                                        return htmlDecode(x)
+                                        })
+               
+                   return { "question": htmlDecode(result.question), 
+                            "answers": decodedAnswers.map((x) => {
+                                        return {
+                                            "answer": x,
+                                            "answerId": nanoid()
+                                        }
+                                    }), 
+                            "correct_answer": htmlDecode(result.correct_answer),
+                            "selectedAnswer": "",
+                            "id": nanoid() 
+                            }
+                } )
+                                
+                setQuestions( remapped_data )
+                                
+            })
+    }, [restartGame]) 
 
-### Code Splitting
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+I also had to parse the data fetched that came in HTML format. This function I googled really came in handy:
 
-### Analyzing the Bundle Size
+```js
+ function htmlDecode(input) {
+        let doc = new DOMParser().parseFromString(input, "text/html");
+        return doc.documentElement.textContent;
+    } 
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+### Continued development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+This project could probably use some sort of background or imagery to really make it pop. 
+It could make use of animations when checking answers.
+A win state such as confetti falling from the confetti npm package could be used. 
 
-### Advanced Configuration
+## Author
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Website - [Cecil Mahumane](https://github.com/cecmahumane/quizzical-app)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Acknowledgments
 
-### `npm run build` fails to minify
+I would like to give special thanks to Frank Davies for providing code reviews and key insights that helped me develop this project. I would also like to thank Bob Ziroll for teaching a great intro to React course. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
