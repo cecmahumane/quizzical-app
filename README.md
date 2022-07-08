@@ -98,7 +98,7 @@ A win state such as confetti falling from the confetti npm package could be used
 
 ## Author
 
-- Website - [Cecil Mahumane](https://github.com/cecmahumane/quizzical-app)
+- Website - [Cecil Mahumane](https://github.com/cecmahumane)
 
 
 ## Acknowledgments
