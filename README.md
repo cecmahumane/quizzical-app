@@ -7,6 +7,7 @@ This is a solution to the [Quizzical final project of Scrimba's Learn React for 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
   - [Screenshot](#screenshot)
+  - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
   - [What I learned](#what-i-learned)
@@ -22,11 +23,15 @@ This is a solution to the [Quizzical final project of Scrimba's Learn React for 
 Users should be able to:
 
 - Complete a trivia game that returns their score out of 5. 
-- Players can view the state of their selections, and can see what answers they got right and wrong when check answers is selected. 
+- Players can view the state of their selections, and can see what answers they got right and wrong, when check answers is selected. 
 
 ### Screenshot
 
 ![](./quizzical-screenshot.png)
+
+### Links
+
+- Solution URL: [https://quizzical-app.cecilmahumane.com](https://quizzical-app.cecilmahumane.com)
 
 ## My process
 
@@ -98,7 +103,7 @@ A win state such as confetti falling from the confetti npm package could be used
 
 ## Author
 
-- Website - [Cecil Mahumane](https://github.com/cecmahumane)
+- Website - [Cecil Mahumane](https://home.cecilmahumane.com)
 
 
 ## Acknowledgments
